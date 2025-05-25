@@ -59,14 +59,14 @@ export default function RussianRoulette() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center space-y-8 bg-gray-900 text-white p-4">
+        <div className="min-h-screen flex flex-col items-center justify-center space-y-4 sm:space-y-8 bg-gray-900 text-white p-4">
             {/* 標題 */}
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text text-transparent text-center">
                 Emoji 俄羅斯轉盤
             </h1>
 
             {/* 遊戲狀態 */}
-            <div className="text-xl">
+            <div className="text-lg sm:text-xl">
                 狀態：{' '}
                 <span className={status === 'playing' ? 'text-green-400' : 'text-red-500'}>
                     {status === 'playing' ? '存活中 ✅' : '爆炸 💥 Game Over'}
@@ -74,7 +74,7 @@ export default function RussianRoulette() {
             </div>
 
             {/* 彈倉顯示 */}
-            <div className="flex items-center justify-center space-x-4 text-6xl">
+            <div className="flex items-center justify-center space-x-2 sm:space-x-4 text-4xl sm:text-6xl">
                 {Array.from({ length: 6 }).map((_, idx) => (
                     <motion.div
                         key={idx}
@@ -92,7 +92,7 @@ export default function RussianRoulette() {
                             idx < chamber ? '🟢' : '⚪'}
                         {idx === chamber && (
                             <motion.div
-                                className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-2xl"
+                                className="absolute -bottom-4 sm:-bottom-6 left-1/2 transform -translate-x-1/2 text-xl sm:text-2xl"
                                 animate={{ y: [0, -4, 0] }}
                                 transition={{ duration: 1, repeat: Infinity }}
                             >
@@ -104,20 +104,20 @@ export default function RussianRoulette() {
             </div>
 
             {/* 控制按鈕 */}
-            <div className="flex space-x-4">
+            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 w-full max-w-xs sm:max-w-none">
                 <button
                     onClick={handleShoot}
                     disabled={status !== 'playing' || isAnimating}
-                    className="px-6 py-3 bg-red-600 rounded-lg text-lg font-semibold
+                    className="w-full sm:w-auto px-6 py-3 bg-red-600 rounded-lg text-base sm:text-lg font-semibold
                      hover:bg-red-700 transition-colors duration-200
                      disabled:opacity-50 disabled:cursor-not-allowed
-                     shadow-lg hover:shadow-red-500/50"
+                     shadow-lg hover:shadow-red-500/50 mt-5"
                 >
                     {isAnimating ? '砰！' : '扣板機'}
                 </button>
                 <button
                     onClick={handleReset}
-                    className="px-6 py-3 bg-blue-600 rounded-lg text-lg font-semibold
+                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 rounded-lg text-base sm:text-lg font-semibold
                      hover:bg-blue-700 transition-colors duration-200
                      shadow-lg hover:shadow-blue-500/50"
                 >
@@ -126,15 +126,15 @@ export default function RussianRoulette() {
             </div>
 
             {/* 歷史記錄 */}
-            <div className="w-full max-w-md bg-gray-800 rounded-lg p-4">
-                <h2 className="text-xl font-semibold mb-3">歷史紀錄：</h2>
-                <ul className="space-y-2">
+            <div className="w-full max-w-md bg-gray-800 rounded-lg p-3 sm:p-4">
+                <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">歷史紀錄：</h2>
+                <ul className="space-y-1 sm:space-y-2">
                     {history.map(({ round, result }) => (
                         <motion.li
                             key={round}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="flex items-center space-x-2 text-lg"
+                            className="flex items-center space-x-2 text-base sm:text-lg"
                         >
                             <span className="text-gray-400">第 {round} 次：</span>
                             <span>{result}</span>
