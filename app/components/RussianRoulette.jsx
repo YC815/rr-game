@@ -1,19 +1,29 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function RussianRoulette() {
     // 遊戲狀態管理
-    const [bulletPos] = useState(() => Math.floor(Math.random() * 6));  // 子彈位置 (0-5)
+    const [bulletPos, setBulletPos] = useState(null);  // 子彈位置 (0-5)
     const [chamber, setChamber] = useState(0);        // 當前彈倉位置
     const [history, setHistory] = useState([]);       // 遊戲歷史
     const [status, setStatus] = useState('playing');  // 遊戲狀態: 'playing' | 'dead'
     const [isAnimating, setIsAnimating] = useState(false); // 動畫狀態
+    const [isReady, setIsReady] = useState(false);    // 組件是否準備就緒
+
+    // 初始化遊戲
+    useEffect(() => {
+        // 確保只在客戶端執行
+        if (typeof window !== 'undefined') {
+            setBulletPos(Math.floor(Math.random() * 6));
+            setIsReady(true);
+        }
+    }, []);
 
     // 處理開槍事件
     const handleShoot = useCallback(() => {
-        if (status !== 'playing' || isAnimating) return;
+        if (status !== 'playing' || isAnimating || !isReady) return;
 
         setIsAnimating(true);
 
@@ -32,12 +42,21 @@ export default function RussianRoulette() {
             }
             setIsAnimating(false);
         }, 500);
-    }, [chamber, bulletPos, status, isAnimating]);
+    }, [chamber, bulletPos, status, isAnimating, isReady]);
 
     // 重置遊戲
     const handleReset = useCallback(() => {
         window.location.reload();
     }, []);
+
+    // 如果組件還沒準備好，顯示載入中
+    if (!isReady) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+                <div className="text-2xl">載入中...</div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center space-y-8 bg-gray-900 text-white p-4">
@@ -69,7 +88,8 @@ export default function RussianRoulette() {
                         }}
                         className={`relative ${idx === chamber ? 'text-yellow-400' : 'text-gray-400'}`}
                     >
-                        {status === 'dead' && idx === chamber ? '💥' : '⚪'}
+                        {status === 'dead' && idx === chamber ? '💥' :
+                            idx < chamber ? '🟢' : '⚪'}
                         {idx === chamber && (
                             <motion.div
                                 className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-2xl"
