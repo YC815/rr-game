@@ -104,11 +104,11 @@ export default function RussianRoulette() {
             </div>
 
             {/* 控制按鈕 */}
-            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 w-full max-w-xs sm:max-w-none">
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4 w-full max-w-md">
                 <button
                     onClick={handleShoot}
                     disabled={status !== 'playing' || isAnimating}
-                    className="w-full sm:w-auto px-6 py-3 bg-red-600 rounded-lg text-base sm:text-lg font-semibold
+                    className="w-full sm:w-48 px-6 py-3 bg-red-600 rounded-lg text-base sm:text-lg font-semibold
                      hover:bg-red-700 transition-colors duration-200
                      disabled:opacity-50 disabled:cursor-not-allowed
                      shadow-lg hover:shadow-red-500/50 mt-5"
@@ -117,7 +117,7 @@ export default function RussianRoulette() {
                 </button>
                 <button
                     onClick={handleReset}
-                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 rounded-lg text-base sm:text-lg font-semibold
+                    className="w-full sm:w-48 px-6 py-3 bg-blue-600 rounded-lg text-base sm:text-lg font-semibold
                      hover:bg-blue-700 transition-colors duration-200
                      shadow-lg hover:shadow-blue-500/50"
                 >
